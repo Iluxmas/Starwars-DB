@@ -1,10 +1,12 @@
 import React from "react";
 import ItemDetails, { Record } from "../item-details/item-details";
 import withSwapi from "../hoc-helpers/withSwapi";
+import { useParams } from "react-router-dom";
 
 const StarshipDetails = (props) => {
+  let { itemId } = useParams();
   return (
-    <ItemDetails {...props}>
+    <ItemDetails {...props} itemId={itemId}>
       <Record field="model" label="Model" />
       <Record field="length" label="Length" />
       <Record field="costInCredits" label="Cost" />
