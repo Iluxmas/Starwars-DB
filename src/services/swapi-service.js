@@ -1,3 +1,4 @@
+import Dummy from "../image/Placeholder.svg";
 export default class SwapiService {
   _apiBase = "https://swapi.dev/api";
 
@@ -13,6 +14,19 @@ export default class SwapiService {
   getAllPeople = async () => {
     const people = await this.getResource(`/people/`);
     return people.results.map((person) => this._transformPerson(person));
+  };
+
+  getPersonImage = async ({ id }) => {
+    const request = fetch(`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`)
+      .then((res) => {
+        if (res.status === "404") {
+          return Dummy;
+        } else {
+          return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
+        }
+      })
+      .catch((err) => console.log(err));
+    return await request;
   };
 
   getPerson = async (id) => {
@@ -40,15 +54,45 @@ export default class SwapiService {
     return this._transformStarShip(ship);
   };
 
-  getPersonImage = ({ id }) => {
-    return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
-  };
-  getStarShipImage = ({ id }) => {
-    return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+  getStarShipImage = async ({ id }) => {
+    const request = fetch(`https://starwars-visualguide.com/assets/img/starships/${id}.jpg`)
+      .then((res) => {
+        if (res.status === "404") {
+          return Dummy;
+        } else {
+          return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+        }
+      })
+      .catch((err) => console.log(err));
+    return await request;
+
+    //return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
   };
   getPlanetImage = ({ id }) => {
     return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
   };
+
+  imageExists = async (url) => {
+    let image = new Image();
+    image.src = url;
+
+    if (!image.complete) {
+      return false;
+    } else if (image.height === 0) {
+      return false;
+    }
+    return true;
+  };
+
+  imageFetch(url) {
+    return fetch(url).then((res) => {
+      if (res.status === 404) {
+        return (image = Dummy);
+      } else {
+        return image;
+      }
+    });
+  }
 
   _getDataId = (item) => {
     return item.url.match(/\d+/)[0];

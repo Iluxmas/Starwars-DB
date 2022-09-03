@@ -38,12 +38,17 @@ export default class ItemDetails extends Component {
     }
 
     getData(itemId).then((item) => {
-      this.setState({ item, image: getImageUrl(item) });
+      getImageUrl(item).then((data) => this.setState({ item, image: data }));
     });
+
+    // getData(itemId).then((item) => {
+    //   console.log(item.id);
+    //   this.setState({ item, image: getImageUrl(item.id) });
+    // });
   }
 
   render() {
-    const { item, image } = this.state;
+    let { item, image } = this.state;
 
     if (!item) {
       return <span>Select an element from the list</span>;
