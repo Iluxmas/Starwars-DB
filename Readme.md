@@ -13,7 +13,7 @@ After cloning, execute next commands to run the project - `npm i` to install dep
 
 **Next plans**: Project is under development. Will be added soon:
 
-- Dummy image if no image recieved from API.
-- Refactor class components to hooks.
-- Webpack compilation
-- Tests coverage.
+- [X] Dummy image if no image recieved from API.
+- [ ] Refactor class components to hooks.
+- [ ] Webpack compilation
+- [ ] Tests coverage.
